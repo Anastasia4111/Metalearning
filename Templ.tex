@@ -1,0 +1,1214 @@
+
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[english,russian]{babel}
+%%%<
+\usepackage{verbatim}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+%%%>
+\tikzset{%
+  >={Latex[width=2mm,length=2mm]},
+  % Specifications for style of nodes:
+            base/.style = {rectangle, rounded corners, draw=black,
+                           minimum width=4cm, minimum height=1cm,
+                           text centered, font=\sffamily},
+  activityStarts/.style = {base, fill=blue!30},
+       startstop/.style = {base, fill=red!30},
+    activityRuns/.style = {base, fill=green!30},
+         process/.style = {base, minimum width=2.5cm, fill=orange!15,
+                           font=\ttfamily},
+}
+
+
+
+\textheight=24cm
+\textwidth=16cm
+
+
+\usepackage{mathtext} 				% русские буквы в формулах
+\usepackage[utf8]{inputenc}			% кодировка исходного текста
+
+\usepackage{minted}  % для кусков кода
+
+%%% Страница
+%\usepackage{extsizes} % Возможность сделать 14-й шрифт
+\usepackage{geometry} % Простой способ задавать поля
+\geometry{top=25mm}
+\geometry{bottom=35mm}
+\geometry{left=35mm}
+\geometry{right=20mm}
+
+  %%% Дополнительная работа с математикой
+  \usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} % AMS
+  \usepackage{icomma} % "Умная" запятая: $0,2$ --- число, $0, 2$ --- перечисление
+
+\usepackage{graphicx} % Для вставки рисунков
+\usepackage{subcaption}
+\usepackage{float}
+
+\usepackage[colorlinks,urlcolor=blue]{hyperref} % ccslrb
+
+\usepackage{array,tabularx,tabulary,booktabs} % Дополнительная работа с таблицами
+\usepackage{longtable}  % Длинные таблицы
+\usepackage{multirow} % Слияние строк в таблице
+
+\usepackage{setspace} % Интерлиньяж
+%\onehalfspacing % Интерлиньяж 1.5
+%\doublespacing % Интерлиньяж 2
+%\singlespacing % Интерлиньяж 1
+
+\usepackage{lastpage} % Узнать, сколько всего страниц в документе.
+
+\usepackage{soulutf8} % Модификаторы начертания
+
+\usepackage{hyperref}
+%\usepackage[usenames,dvipsnames,svgnames,table,rgb]{xcolor}
+
+\hypersetup{				% Гиперссылки
+	unicode=true,           % русские буквы в раздела PDF
+	pdftitle={Заголовок},   % Заголовок
+	pdfauthor={Автор},      % Автор
+	pdfsubject={Тема},      % Тема
+	pdfcreator={Создатель}, % Создатель
+	pdfproducer={Производитель}, % Производитель
+	pdfkeywords={keyword1} {key2} {key3}, % Ключевые слова
+	colorlinks=true,       	% false: ссылки в рамках; true: цветные ссылки
+	linkcolor=red,          % внутренние ссылки
+	citecolor=green,        % на библиографию
+	filecolor=magenta,      % на файлы
+	urlcolor=cyan           % на URL
+}
+
+%\renewcommand{\familydefault}{\sfdefault} % Начертание шрифта
+
+\usepackage{multicol} % Несколько колонок
+
+\usepackage{fancyhdr} % Колонтитулы
+%\pagestyle{fancy}
+%\renewcommand{\headrulewidth}{0mm}  % Толщина линейки, отчеркивающей верхний колонтитул
+%\lfoot{Нижний левый}
+%\rfoot{Нижний правый}
+%\rhead{Верхний правый}
+%\chead{Верхний в центре}
+%\lhead{Верхний левый}
+% \cfoot{Нижний в центре} % По умолчанию здесь номер страницы
+
+\usepackage{tikz}
+
+  %% Свои команды
+  \DeclareMathOperator{\sgn}{\mathop{sgn}}
+
+  %% Перенос знаков в формулах (по Львовскому)
+  \newcommand*{\hm}[1]{#1\nobreak\discretionary{}
+  	{\hbox{$\mathsurround=0pt #1$}}{}}
+
+
+
+%%% Теоремы
+\theoremstyle{plain} % Это стиль по умолчанию, его можно не переопределять.
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem{proposition}[theorem]{Утверждение}
+
+\theoremstyle{definition} % "Определение"
+\newtheorem{corollary}{Следствие}[theorem]
+\newtheorem{problem}{Задача}[section]
+
+\theoremstyle{remark} % "Примечание"
+\newtheorem*{nonum}{Решение}
+
+
+
+
+
+\bibliographystyle{unsrt}
+
+  \newcommand{\N}{\mathbb{N}}
+  \newcommand{\X}{\times}
+  \newcommand{\x}{\cdot}
+
+ % \pagestyle{empty}
+ % \textwidth=160mm
+  %\textheight=250mm
+  %\hoffset=-20mm
+  %\voffset=-30mm
+
+%\title{Курсовая работа}
+%\author{Волкова Анастасия\ volckowanastya@gmail.com}
+
+
+
+\begin{document}
+	\selectlanguage{russian}
+
+  \thispagestyle{empty}
+  \begin{center}
+      \textbf{ПРАВИТЕЛЬСТВО РОССИЙСКОЙ ФЕДЕРАЦИИ}\\
+      \vspace{2ex}
+      \textbf{Федеральное государственное автономное образовательное учреждение\\ высшего профессионального образования
+<<Национальный\\ исследовательский университет  <<Высшая школа экономики>>}
+
+      \vspace{8ex}
+      \begin{center}
+          Факультет экономических наук\\
+          \vspace{4ex}
+          Образовательная программа <<Экономика>>
+      \end{center}
+  \end{center}
+  \vspace{9ex}
+
+  \begin{center}
+      {\textbf{КУРСОВАЯ РАБОТА
+      }}
+      \vspace{1ex}
+
+      <<Сравнение алгоритмов прогнозирования рядов на базе М4>>
+  \end{center}
+  \vspace{8ex}
+  \begin{flushright}
+    \noindent
+    Выполнила:\\
+    \vspace{1ex}
+      \noindent
+      Студентка группы БЭК161\\
+      Волкова Анастасия Эдуардовна\\
+      \vspace{10ex}
+      Научный руководитель:\\
+      \vspace{1ex}
+      старший преподаватель\\ департамента прикладной экономики\\
+      Демешев Борис Борисович
+
+  \end{flushright}
+
+  \vfill
+
+  \begin{center}
+      Москва 2019
+
+  \end{center}
+  \newpage
+
+\tableofcontents
+
+\newpage
+\section{Введение}
+
+В работе представлен обзор нового метода прогнозирования \textbf{M4metalearning}, занявшего второе место в соревнованиях \textbf{M4 Competition} в 2018 году.
+
+Данный метод был разработан исследователем Пабло Монтеро-Мансо из университета Испании Ла-Корунья и его австралийскими коллегами из университета Монаша, включая известного статистика Роба Хиндмана.
+
+Новизна алгоритма состоит в линейном комбинировании прогнозов 9 стандартных методов, веса для которого вычисляются с помощью градиентного бустинга решающих деревьев.
+
+Комбинация составляется из 9 базовых методов прогнозирования:
+\begin{itemize}
+	\item ARIMA модель, параметры $p, d$ и $q$ настраиваются автоматически.
+  \item ETS модель, параметры настраиваются автоматически.
+  \item NNAR. Нейронная сеть прямого распространения с одним скрытым слоем, обучающаяся на лагах. Количество лагов настраивается автоматически.
+  \item TBATS.  Модель включает в себя тригонометрические методы для распознования сезонности, которая может менятся со временем, трансформацию Бокса-Кокса от гетероскедастичности, ARMA ошибки, тренд и сезонность подобно ETS. Параметры настраиваются автоматически.
+  \item STLM-AR. Метод сезонной трансформации с помощью LOESS с AR моделированием очищенных от сезонности рядов.
+  \item THETA. Тета-метод выиграл M3 Forecasting Competition в 2000 году.
+  \item Случайное блуждание. Наивный прогноз с помощью последнего наблюдения.
+  \item Модель случайного блуждания со сдвигом. Частный случай ARIMA(0,1,0) с константой.
+  \item Наивный прогноз с учетом сезонности.
+
+\end{itemize}
+
+В данной работе рассматриваемый метод с использованием предобученной модели был протестирован на данных из набора М4 и базе данных российских макроэкономических рядов \textbf{sophisthse}.
+Сравнение качества по MAPE показало, что исследуемый метод почти всегда опережает автонастраиваемые модели ARIMA и ETS.
+Кроме того, модель была обучена на части рядов из \textbf{sophisthse} и протестирована на остальных.
+
+Все действия, к которым написан код, реализованы на языке программирования R, список необходимых пакетов и правила их установки можно найти в приложении.
+
+\newpage
+
+\section{Описание методов прогнозирования}
+Проведем краткий обзор методов прогнозирования, используемых в алгоритме M4metalearning.
+Для наглядности будем применять их к конкретному временному ряду.
+Например, возьмем данные по ежемесячным продажам кортикостероидных препаратов H02 в Австралии с 1992 по 2010 год.
+Данный ряд можно найти в пакете fpp2 (Forecasting: principles and practice,2nd ed, 2017), а также вам понадобится пакеты ggplot2 для визуализации и forecast для вызова методов прогнозирования. Инструкции по установке можно найти в приложении.
+
+\begin{minted}{r}
+autoplot(h02) + ylab("млн $") + xlab("Месяц")+
+ggtitle("Уровень продаж кортикостероидов в Австралии")
+\end{minted}
+
+\begin{figure}[H]
+  \noindent\centering{
+  \includegraphics[width=\linewidth]{h02.png}
+  }
+  \caption{Исходный ряд}
+  \label{figCurves}
+\end{figure}
+
+Заметим, что ряд нестационарный, присутствует возрастающий тренд, а также небольшой рост дисперсии по мере увеличения уровня ряда.
+Данную проблему можно исправить с помощью логарифмирования.
+Также присутствует сезонность, посмотрим на нее в полярных координатах.
+
+\begin{minted}{r}
+ggseasonplot(h02, polar = TRUE) + ylab("млн $") + xlab("Месяц")
+\end{minted}
+
+\begin{figure}[H]
+  \noindent\centering{
+  \includegraphics[width=\linewidth]{polar.png}
+  }
+  \caption{Сезонность продаж кортикостероидов в Австралии в полярных координатах}
+  \label{figCurves}
+\end{figure}
+
+Наличие сезонности, а именно ежегодно самый низкий уровень продаж в феврале можно отчасти попытаться объяснить как спецификой препарата, так и тем фактом, что в Австралии январь -- последний теплый месяц и на него приходится пик туристического сезона.
+С февраля начинается новый учебный год, уровень расходов во всем секторе ритейла падает.
+
+Поделим ряд на обучающую и тестовую выборки:
+\begin{minted}{r}
+train <- window(h02, start = 1992, end = 2007)
+test  <- window(h02, start = 2007)
+\end{minted}
+
+\newpage
+
+\subsection{Случайное блуждание}
+Данный метод прогнозирует по принципу: «показатель будет такой же, как вчера». Часто используется как эталонный тест для сравнения качества.
+\begin{equation}
+  \hat{y}_{T+h|T} = y_{T}
+\end{equation}
+
+\begin{center}
+  \textit{T} - последний элемент выборки train \\
+  \textit{h} - длина прогноза
+\end{center}
+
+
+
+\begin{minted}{r}
+# Наивный прогноз, за h возьмем длину выборки test
+fcst_naive <- naive(train, h = 18)
+
+# Проверим качество
+accuracy(fcst_naive$mean, test)
+#                 ME      RMSE       MAE       MPE     MAPE      ACF1
+# Test set -0.3363762 0.3968374 0.3363762 -46.15849 46.15849 0.6911659
+
+# Построим график
+autoplot(fcst_naive) + xlab("Дата") + ylab("Объем продаж, млн $") +
+ggtitle("Прогноз объема продаж кортикостероидов в Австралии с помощью Naive")
+\end{minted}
+
+
+ \begin{figure}[H]
+  \includegraphics[width=\linewidth]{naive.png}
+  \caption{Наивный метод}
+  %\label{fig:boat1}
+\end{figure}
+
+\newpage
+
+
+\subsection{Наивный прогноз с учетом сезонности}
+Модификация наивного метода для данных с сезонностью.
+Работает по принципу:  «показатель будет таким же, как в прошлом сезоне», в нашем случае «как в прошлом году»
+
+\[
+\hat{y}_{T+h|T} = y_{T+h-m(k+1)}
+\]
+
+\begin{center}
+  \textit{T} - последний элемент выборки train \\
+  \textit{h} - длина прогноза \\
+  \textit{m} - частота сезонности \\
+  \textit{k} - количество уже спрогнозированных полных периодов на данный момент
+\end{center}
+
+
+\begin{minted}{r}
+# Наивный прогноз с учетом сезонности
+fcst_s_naive <- snaive(train, h = 18)
+
+# Проверим качество
+accuracy(fcst_s_naive$mean, test)
+                ME       RMSE        MAE      MPE     MAPE       ACF1
+Test set 0.02649856 0.08077987 0.06151007 2.444995 7.345278 -0.3012539
+
+# Построим график
+autoplot(fcst_s_naive) + xlab("Дата") + ylab("Объем продаж, млн $") +
+ggtitle("Прогноз объема продаж кортикостероидов в Австралии с помощью sNaive")
+
+\end{minted}
+
+
+\begin{figure}[H]
+ \includegraphics[width=\linewidth]{snaive.png}
+ \caption{Наивный метод с учетом сезонности}
+ %\label{fig:boat2}
+\end{figure}
+
+\newpage
+
+  \subsection{ARIMA}
+  \textbf{AR(Авторегрессия)}
+
+Множественная регрессия с последними $p$ наблюдениями в качестве регрессоров.
+
+  \begin{equation}
+    y_{t} = c + \phi_{1}y_{t-1} + \phi_{2}y_{t-2} + \cdots + \phi_{p}y_{t-p} + e_{t}
+  \end{equation}
+
+  \noindent\textbf{MA(Скользящее среднее)}
+
+  Множественная регрессия с последними $q$ ошибками в качестве регрессоров.
+
+\begin{equation}
+  y_t = c + e_t + \theta_1 e_{t-1} + \theta_2 e_{t-2} + \cdots + \theta_q e_{t-q}
+\end{equation}
+
+
+
+  \noindent\textbf{ARMA процесс}
+
+  Множественная регрессия с последними $p$ наблюдениями и $q$ ошибками в качестве регрессоров -- $ARMA(p,q)$
+
+  \begin{equation}
+  y_{t} = c + \phi_{1}y_{t-1} + \cdots + \phi_{p}y_{t-p}
+     + \theta_{1}e_{t-1} + \cdots + \theta_{q}e_{t-q} + e_{t}
+  \end{equation}
+
+  Данная модель работает только для стационарных рядов, поэтому сначала нужно продифференцировать данные (например, можно взять разность между соседними наблюдениями), очистив их от тренда и сезонности.
+
+  \vspace{2ex}
+
+  \noindent\textbf{ARIMA -- AutoRegressive Integrated Moving Average}
+
+  В отличии от $ARMA(p,q)$ данная модель включает в себя дополнительный параметр степени дифференцирования исходных данных $d$ для приведения их к стационарному виду и записывается как $ARIMA(p,d,q)$.
+
+
+  \begin{equation}
+  y'_{t} = c + \phi_{1}y'_{t-1} + \cdots + \phi_{p}y'_{t-p}
+     + \theta_{1}e_{t-1} + \cdots + \theta_{q}e_{t-q} + e_{t},
+\end{equation}
+
+где $y'_{t} = y_{t} - y_{t-1}$ -- ряд из разностей между соседними элементами исходного ряда, опционально возможно и многократное взятие разности.
+
+\begin{minted}{r}
+# ARIMA
+model_arima <- auto.arima(train)
+
+summary(model_arima)
+# Была выбрана ARIMA(1,0,2)(2,1,1)[12] со сдвигом
+fcst_arima <- forecast(model_arima, h = 18)
+
+# Проверим качество
+accuracy(fcst_arima$mean, test)
+#                 ME       RMSE        MAE      MPE     MAPE        ACF1
+# Test set 0.02345918 0.07143445 0.05690555 1.939375 6.971999 -0.09930066
+
+# Построим график
+fit %>%
+  forecast(h = 18) %>%
+  autoplot() + xlab("Дата") + ylab("Объем продаж, млн $") +
+  ggtitle("Прогноз объема продаж  кортикостероидов в Австралии с помощью ARIMA")
+
+\end{minted}
+
+\begin{figure}[H]
+  \noindent\centering{
+  \includegraphics[width=\linewidth]{arima.png}
+  }
+  \caption{Arima}
+  \label{figCurves}
+\end{figure}
+
+
+\subsection{ETS}
+
+Прогнозы, полученные с использованием методов экспоненциального сглаживания, представляют собой средневзвешенные значения прошлых наблюдений.
+Последние наблюдения имеют больший вес.
+Данная модель быстро строит надежные прогнозы для широкого диапазона временных рядов, что является большим преимуществом для решения различных бизнес-задач.
+
+\vspace{2ex}
+ETS расшифровывается как:
+\begin{center}
+ETS =\{Error, Trend, Seasonality\}
+
+\vspace{2ex}
+
+Каждая составляющая данного метода может быть нескольких видов:
+
+Trend = \{None, Additive, Additive-damped\}
+\vspace{2ex}
+
+Seasonality = \{None, Additive, Multiplicative\}
+\vspace{2ex}
+
+Error = \{Additive, Multiplicative\}
+\end{center}
+
+Наиболее подходящая модель может подбираться автоматически с помощью команды \verb|ets()|, которая использует критерий AIC -- Akaike's Information Criterion и метод максимального правдоподобия.
+
+\begin{minted}{r}
+fcst_ets <- ets(train)
+# Автоматически была подобрана модель ETS(M,A,M)
+
+# Построим прогноз
+acc_ets <- forecast(fcst_ets, h = 18)
+
+# Проверим качество
+accuracy(forets$mean, test)
+#                  ME       RMSE        MAE       MPE     MAPE        ACF1
+# Test set -0.01814064 0.07401407 0.05845077 -3.146405 7.519454 -0.05680415
+
+# Построим график
+autoplot(fcst_ets) + xlab("Дата") + ylab("Объем продаж, млн $") +
+  ggtitle("Прогноз объема продаж кортикостероидов в Австралии с помощью ETS")
+\end{minted}
+
+\begin{figure}[H]
+  \noindent\centering{
+  \includegraphics[width=\linewidth]{ets.png}
+  }
+  \caption{ETS}
+  %\label{figCurves}
+\end{figure}
+
+\newpage
+\subsection{NNETAR}
+Прямая нейронная сеть с одним скрытым слоем для прогнозирования одномерных временных рядов по их предыдущим значениям.
+Если представить нейронную сеть без скрытого слоя, она будет эквивалентна обычной линейной регрессии, в которой веса ко входным данным подбираются с помощью МНК.
+Если в нейронной сети появляется хотя бы один скрытый слой нейронов, то она становится нелинейной.
+Каждый скрытый нейрон преобразовывает данные с помощью какой-нибудь нелинейной функции, например, сигмоиды.
+
+\begin{equation}
+  s(z) = \frac{1}{1+e^{-z}}
+\end{equation}
+
+\vspace{3ex}
+
+Если рассмотреть частный случай $NNAR(2,2,1)_2$, на вход сети будут подаваться такие значения:
+
+\begin{figure}[H]
+  \noindent\centering{
+  \includegraphics[width=\linewidth]{nnet2.png}
+  }
+  %\label{figCurves}
+\end{figure}
+
+
+
+\vspace{2ex}
+
+$NNAR(p,k)$ -- Neural Network AutoRegression
+
+Во входной слой подаются $p$ предыдущих значений ряда.
+Скрытый слой содержит $k$ нейронов. Данная модель является базовой.
+
+Для сезонных данных существует расширение  $NNAR(p,P,k)_m$.
+Такая модель содержит данные за $P$ предыдущих сезонов периодичностью $m$.
+
+\begin{equation}
+  (y_{t-1},y_{t-2},\dots,y_{t-p},y_{t-m},y_{t-2m},y_{t-Pm},\dots)
+\end{equation}
+
+Функция  \verb|nnetar()| автоматически подбирает параметры для модели $NNAR(p, P, k)_m$, $p$ используя критерий AIC, число нейронов вычисляется как $k=(p+P+1)/2$, округленное до ближайшего целого числа.
+
+\begin{minted}{r}
+#  Нейронная сеть
+model_nnet <- nnetar(train)
+# Построим прогноз
+fcst_nnet <- forecast(model_nnet, h = 18)
+# Построим график
+autoplot(fcst_nnet) + xlab("дата") + ylab("Объем продаж, млн $") +
+  ggtitle("Прогноз объема продаж  кортикостероидов в Австралии с помощью NNAR")
+
+# Проверим качество
+accuracy(fcst_nnet, test)
+#                  ME       RMSE        MAE     MPE     MAPE        ACF1
+# Test set 0.02170774 0.07206502 0.05740173 1.55178 7.095887 -0.00333016
+
+\end{minted}
+
+
+
+\begin{figure}[H]
+  \noindent\centering{
+  \includegraphics[width=\linewidth]{nnet.png}
+  }
+  \caption{nnetar}
+  \label{figCurves}
+\end{figure}
+
+В отличие от линейной авторегрессии, нейронная сеть может распознавать и прогнозировать ассиметричные циклы, это одно из ее преимуществ.
+
+\newpage
+
+\subsection{TBATS}
+
+\textbf{T}rigonometric terms for seasonality
+
+\noindent\textbf{B}ox-Cox transformations for heterogeneity
+
+\noindent\textbf{A}RMA errors for short-term dynamics
+
+\noindent\textbf{T}rend (possibly damped)
+
+\noindent\textbf{S}easonal (including multiple and non-integer periods)
+
+\vspace{2ex}
+
+Данная модель включает в себя множество различных более простых методов:
+для моделирования сезонности применяется тригонометрия, но в отличие от гармонической регрессии здесь сезонность может менять свою форму во времени, трансформацию Бокса-Кокса, ARMA ошибки для временных колебаний, тренд и уровень ряда подобно модели ETS.
+Все параметры подбираются автоматически.
+Более подробно читайте \href{https://robjhyndman.com/papers/ComplexSeasonality.pdf}{здесь}.
+
+\[
+w_t  =
+    \begin{cases}
+      \log(y_t) & \text{если $\lambda=0$};  \\
+      (y_t^\lambda-1)/\lambda & \text{иначе}.
+    \end{cases}
+\]
+
+\begin{align*}
+  y_t &=\ell_{t-1}+\phi b_{t-1}+\sum_{i=1}^{M} s^{(i)}_{t-m_i} + d_t\\
+  \ell_t&=\ell_{t-1}+\phi b_{t-1}+\alpha d_t\\
+  b_t &=(1-\phi)b+\phi b_{t-1} + \beta d_t\\
+  d_t &= \sum_{i=1}^{p} \phi_{i} d_{t-i} + \sum_{j=1}^{q} \theta_{j} \varepsilon_{t-j} + \varepsilon_t\\
+  s_{t}^{(i)} &= \sum_{j=1}^{k_i} s_{j,t}^{(i)}\\
+s_{j,t}^{(i)} &= s_{j,t-1}^{(i)}\cos \left(\lambda_j^{(i)} \right) +s_{j,t-1}^{\ast(i)} \sin \left(\lambda_j^{(i)}\right) + \gamma_1d_t \\
+s_{j,t}^{(i)} &= - s_{j,t-1}^{(i)}\sin \lambda_j^{(i)}  +s_{j,t-1}^{\ast(i)} \cos \lambda_j^{(i)} + \gamma_{2}^{(i)} d_t
+\end{align*}
+
+
+
+
+ \begin{minted}{r}
+# TBATS модель
+tbats_model <- tbats(train)
+# Построим прогноз
+fcst_tbats <- forecast(tbats_model, h=18)
+# Проверим качество
+accuracy(fcst_tbats , test)
+#                  ME       RMSE        MAE      MPE     MAPE        ACF1
+# Test set 0.02345918 0.07143445 0.05690555 1.939375 6.971999 -0.09930066
+
+# Построим график
+autoplot(fcst_tbats) + xlab("дата") + ylab("Объем продаж, млн $") +
+  ggtitle("Прогноз объема продаж  кортикостероидов в Австралии с помощью TBATS")
+
+ \end{minted}
+
+\begin{figure}[H]
+   \noindent\centering{
+   \includegraphics[width=\linewidth]{tbats.png}
+   }
+   \caption{TBATS}
+   \label{figCurves}
+ \end{figure}
+
+\subsection{STLM-AR}
+
+ \textbf{S}easonal and
+
+ \noindent\textbf{T}rend decomposition using
+
+  \noindent\textbf{L}oess
+
+
+STL -- это универсальный и надежный метод разложения временных рядов, обнаруживаюший любой вид сезонности (не только широковстречающиеся квартальные, месячные или годовые).
+
+Предполагается, что $y_t = \hat{S}_t + \hat{T}_t+\hat{R}_{t}$ (или мультипликативный вид)  это декомпозиция ряда, где  каждая составляющая прогнозируется отдельно.
+
+Более подробно читайте \href{https://otexts.com/fpp2/stl.html}{здесь}.
+
+Функция stlm() включает в себя корректировку сезонности с помощью метода STL, бессезонную  ETS модель, которая затем обратно сезонируется.
+
+%Проще говоря, ets применяет экспоненциальное сглаживание к тренду, ошибке и сезонности, stlm только для ошибки и тренда, а thetaf только для ошибок.
+
+\begin{figure}[H]
+  \noindent\centering{
+  \includegraphics[width=\linewidth]{stl.png}
+  }
+  \caption{STL}
+\end{figure}
+
+На рисунке представлена декомпозиция исследуемого ряда.
+Двумя основными настраиваемыми параметрами при использовании STL являются окно тренда-цикла  и сезонное окно.
+Они контролируют, насколько быстро могут меняться трендовый цикл и сезонные компоненты.
+Меньшие значения допускают более быстрые изменения.
+
+\begin{minted}{r}
+# STLM
+model_stlm_ar <- stlm(train, modelfunction = ar)
+fcst_stlm_ar <- forecast(model_stlm_ar, h = 18)
+
+# Проверим качество
+accuracy(fcst_stlm_ar$mean, test)
+#                ME       RMSE        MAE      MPE     MAPE      ACF1
+# Test set 0.039341 0.08847129 0.07126412 3.172814 8.480873 0.2734496
+
+# Построим график
+autoplot(fcst_stlm_ar) + xlab("дата") + ylab("Объем продаж, млн $") +
+  ggtitle("Прогноз объема продаж  кортикостероидов в Австралии с помощью STLM")
+\end{minted}
+
+\begin{figure}[H]
+  \noindent\centering{
+  \includegraphics[width=\linewidth]{stlm.png}
+  }
+  \caption{stlm}
+  \label{figCurves}
+\end{figure}
+
+\subsection{RW-DRIFT}
+Данную модель можно рассматривать как частный случай $ARIMA(0,1,0)$.
+
+
+\[
+\hat{y}_{T+h|T} = y_{T} + \frac{h}{T-1}\sum_{t=2}^T (y_{t}-y_{t-1}) = y_{T} + h \left( \frac{y_{T} -y_{1}}{T-1}\right)
+\]
+
+\begin{minted}{r}
+# RW DRIFT
+fcst_rw_drift <- rwf(train, h = 18, drift = TRUE)
+
+# Проверим качество
+accuracy(fcst_rw_drift$mean, test)
+#                  ME      RMSE       MAE       MPE     MAPE      ACF1
+# Test set -0.3645362 0.4195183 0.3645362 -49.39236 49.39236 0.6877662
+
+# Построим график
+autoplot(fcst_rw_drift) + xlab("дата") + ylab("Объем продаж, млн $") +
+  ggtitle("Прогноз объема продаж  кортикостероидов в Австралии с помощью RW-Drift")
+\end{minted}
+
+\begin{figure}[H]
+  \noindent\centering{
+  \includegraphics[width=\linewidth]{rwdrift.png}
+  }
+  \caption{RW-Drift}
+  %\label{figCurves}
+\end{figure}
+
+\subsection{THETAF}
+
+Theta метод применяется к несезонным или очищенным от сезонности временным рядам.
+Десезонализация обычно выполняется посредством мультипликативного классического разложения.
+
+\begin{equation}
+Y^{''}_{t,\theta}= \theta X^{''}_{t} = \theta(X_t - 2X_{t-1} + X_{t-2})
+\end{equation}
+
+Решение данного уравнения:
+
+\begin{equation}
+Y_{t,\theta}= a_{\theta} + b_{\theta}(t-1) + \theta X_{t},
+\end{equation}
+где $a_{\theta}$ и $b_{\theta}$ являются константами.
+
+$Y_{t}$ является линейной функцией от $X_{t}$ с добавлением линии тренда.
+Параметры $a_{\theta}$ и $b_{\theta}$ подбираются минимизацией суммы квадартов ошибок $\sum_{i=1}^{t} = [X_t - Y_{t,\theta}]^2$
+
+Метод разбивает исходные временные ряды на две новые линии через так называемые тета-коэффициенты, обозначаемые  $\theta_1$ и $\theta_2$, которые применяются к данным, подвергнувшихся двукратному взятию разностей.
+Если $\theta$ равно нулю, новая линия является прямой.
+Когда $\theta$ > 1, локальные кривизны увеличиваются, увеличивая кратковременные движения временного ряда.
+Полученные новые линии называются тета-линиями.
+Эти линии имеют то же среднее значение и наклон, что и исходные данные, но локальные кривизны либо отфильтровываются, либо усиливаются в зависимости от значения коэффициента $\theta$.
+
+В статье «Unmasking the Theta method» Роба Хиндмана приводится максимально краткое и понятное описание данного метода, а также отмечен факт сходства его прогнозов с прогнозами модели простого экспоненциального сглаживания со сдвигом.
+Более подробно читайте \href{https://robjhyndman.com/papers/Theta.pdf}{здесь}.
+
+\begin{minted}{r}
+# Theta method
+fcst_theta <- thetaf(y = train, h = 18)
+
+# Проверим качество
+accuracy(fcst_theta$mean, test)
+#                   ME       RMSE        MAE        MPE     MAPE        ACF1
+# Test set 0.003803136 0.07383127 0.06249971 -0.7075656 7.806133 0.007525667
+
+# Построим график
+autoplot(fcst_theta) + xlab("дата") + ylab("Объем продаж, млн $") +
+  ggtitle("Прогноз объема продаж  кортикостероидов в Австралии с помощью Theta-method")
+\end{minted}
+
+\begin{figure}[H]
+  \noindent\centering{
+  \includegraphics[width=\linewidth]{theta.png}
+  }
+  \caption{Theta}
+  \label{figCurves}
+\end{figure}
+
+\subsection{Комбинация}
+
+Теперь попробуем построить прогноз с помощью исследуемого метода -- взвешенной комбинации вышепредставленных алгоритмов.
+
+\begin{minted}{r}
+# Combination
+forec_result <- forecast_meta_M4(model_M4, train, h=18)
+accuracy(f= forec_result$mean, test, test = NULL, d = NULL, D = NULL)
+
+                   ME      RMSE       MAE       MPE     MAPE        ACF1
+ Test set -0.005720993 0.2140872 0.1345924 -4.213791 14.78935 -0.06484862
+
+# Посмотрим на график
+plot(ts(c(train, forec_result$mean),
+        start=start(train), frequency = frequency(train)),
+     col="red", type="l", ylab="Объем продаж, млн$", xlab = "Год")
+lines(train, col="black")
+\end{minted}
+
+\begin{figure}[H]
+  \noindent\centering{
+  \includegraphics[width=\linewidth]{meta.png}
+  }
+  \caption{Прогноз комбинированного метода}
+  %\label{figCurves}
+\end{figure}
+
+Подведем промежуточный итог, сравнив качество прогнозов разных методов на тестовой выборке в одной таблице. Новый метод далее указан как meta.
+
+% latex table generated in R 3.5.3 by xtable 1.8-4 package
+% Sun May 26 15:14:06 2019
+\begin{table}[ht]
+\centering
+\begin{tabular}{rll}
+  \hline
+ & Метод & MAPE \\
+  \hline
+1 & naive & 46.16 \\
+  2 & snaive & 7.35 \\
+  3 & ets & 7.52 \\
+  4 & arima & 6.97\\
+  5 & rw-drift & 49.39 \\
+  6 & theta & 7.81 \\
+  7 & nnetar & 7.1 \\
+  8 & tbats & 6.97 \\
+  9 & stlm & 8.48 \\
+  10 & meta & 14.8 \\
+   \hline
+\end{tabular}
+\caption{MAPE прогнозов базовых методов ряда H02}
+\end{table}
+
+Худшее качество у моделей случайного блуждания, которые не учитывают сезонность.
+Остальные методы  имеют относительно схожее качество.
+MAPE моделей arima и tbats странным образом оказались одинаковыми и имеют наилучшее качество.
+
+\vspace{2ex}
+
+Теперь представим все прогнозы на одном графике:
+
+\begin{minted}{r}
+autoplot(h02) +
+  autolayer(forets, series="ETS", PI=FALSE) +
+  autolayer(for_arima, series="ARIMA", PI=FALSE) +
+  autolayer(naiv, series="NAIVE", PI=FALSE) +
+  autolayer(snaiv, series="SNAIV", PI=FALSE) +
+  autolayer(fcast, series="NNETAR", PI=FALSE) +
+  autolayer(fc, series="TBATS", PI=FALSE) +
+  autolayer(forts, series="STLM", PI=FALSE) +
+  autolayer(rwd, series="RWD", PI=FALSE) +
+  autolayer(ftheta, series="THETA", PI=FALSE) +
+  xlab("Год") + ylab("млн$") +
+  ggtitle("Прогноз объема продаж кортикостероидов в Австралии")
+\end{minted}
+
+\begin{figure}[H]
+  \noindent\centering{
+  \includegraphics[width=\linewidth]{combi.png}
+  }
+  \caption{Прогнозы ряда H02 базовых методов}
+  %\label{figCurves}
+\end{figure}
+
+
+
+\section{Алгоритм}
+
+Данную модель можно использовать двумя способами.
+Использовать при прогнозировании предобученную создателями модель, сосредоточенную в пакете M4metaresults или обучать ее заново на данных, которыми Вы располагаете, а затем применять ее.
+Второй способ занимает много времени и требует достаточного количества данных, поэтому начнем с первого, чтобы познакомиться с тем как работает данная модель.
+
+
+\subsection{Предобученная модель}
+
+Рассмотрим каким способом модель вычисляет веса для комбинирования индивидуальных методов прогнозирования.
+\vspace{2ex}
+
+\begin{tikzpicture}[node distance=1.5cm,
+    every node/.style={fill=white, font=\sffamily}, align=center]
+  % Specification of nodes (position, etc.)
+  \node (start)             [activityStarts]              {Загрузка набора данных};
+  \node (onCreateBlock)     [process, below of = start, xshift = -5cm]          {Извлечение признаков};
+  \node (onCreateBlock1)     [process,right of=onCreateBlock, xshift = 5cm]        {Подсчет индивидуальных прогнозов};
+  \node (onStartBlock)      [process, below of=onCreateBlock]   {Загрузка признаков в предобученную модель};
+  \node (activityRuns)      [activityRuns, below of=onStartBlock]
+                                                      {Подсчет весов};
+  \node (onPauseBlock)      [process, below of=onCreateBlock1, xshift=2cm]
+                                                                {Набор индивидуальных прогнозов};
+
+  \node (ActivityDestroyed) [startstop, below of=activityRuns, xshift=4cm]
+                                                    {Финальный прогноз};
+  % Specification of lines between nodes specified above
+  % with aditional nodes for description
+  \draw[->]             (start) -- (onCreateBlock);
+  \draw[->]             (start) -- (onCreateBlock1);
+  \draw[->]     (onCreateBlock) -- (onStartBlock);
+  \draw[->]     (onStartBlock) -- (activityRuns);
+  \draw[->]     (onCreateBlock1) -- (onPauseBlock);
+  \draw[->]      (onPauseBlock) -- (ActivityDestroyed);
+  \draw[->]    (activityRuns) -- (ActivityDestroyed);
+
+  \end{tikzpicture}
+
+
+\vspace{2ex}
+
+
+
+\textbf{Модель для получения средних прогнозов:}
+
+По сути, это основанный на характеристиках ряда градиентный бустинг решающих деревьев \verb|xgboost|, в котором функция потерь, которую нужно минимизировать, адаптируется к ошибке OWA (Overall Weighted Average -- средневзвешенное между MASE и sMAPE), используемой в соревнованиях M4.
+
+\textbf{Модель для создания интервалов прогнозирования:}
+
+Данный метод использует средние прогнозы (результат нашего среднего подхода) в качестве центра интервала, и находит линейную комбинацию 95\% интервалов прогнозов 3 методов: theta, naive и snaive.
+
+
+
+
+\subsection{Извлекаемые признаки}
+
+  Данная модель испоьзует 42 признака ряда.
+
+
+    \begin{enumerate}
+      \item \verb|x_acf| Коэффициент автокорреляции первого порядка
+      \item \verb|x_acf10| Сумма квадратов первых десяти автокорреляционных коэффициентов
+      \item \verb|diff1_acf1| Коэффициент автокорреляции первого порядка для первой разности ряда
+      \item \verb|diff1_acf10| Сумма квадратов первых десяти автокорреляционных коэффициентов для первой разности ряда
+      \item \verb|diff2_acf1| Коэффициент автокорреляции первого порядка для второй разности ряда
+      \item \verb|diff2_acf10| Сумма квадратов первых десяти автокорреляционных коэффициентов для второй разности ряда
+      \item \verb|seas_acf1| Коэффициент автокорреляции первого сезонного лага. Если сезонности нет, равен 0.
+      \item \verb|ARCH.LM| Статистика, основанная на LM тесте авторегрессионной условной гетероскедастичности. $R^2$ авторегрессионной модели 12 лагов применен к $x^2$ после вычета среднего.
+      \item \verb|crossing_point| Количество пересечений медианы временным
+      \item \verb|entropy|  Спектральная энтропия ряда. $H_s(x_t) = - \int_{-\Pi}^{\Pi} f_x(\lambda) \log f_x(\lambda) d\lambda$, где плотность нормализована $\int_{-\pi}^{\pi} f_x(\lambda) d\lambda = 1$
+      \item \verb|flat_spots|  Число плоских участков в ряду, вычисленное путем дискретизации ряда на 10 равных интервалов и подсчета максимальной длины пробега в пределах любого отдельного интервала.
+      \item \verb|arch_acf|  После того, как ряд предварительно приведен к виду белого шума с помощью AR-модели и возведен в квадрат, сумма квадратов первых 12 автокорреляций.
+      \item \verb|garch_acf|  После предварительного приведения ряда к виду белого шума с помощью модели AR к нему применяется модель \verb|GARCH(1,1)| и вычисляются остатки. Сумма квадратов первых 12 автокорреляция квадратов остатков.
+      \item \verb|arch_r2|  После того, как ряд предварительно очищен с помощью модели AR и возведен в квадрат, $R^2$ примененной к нему модели AR.
+      \item \verb|garch_r2|  После предварительного приведения ряда к виду белого шума с помощью модели AR к нему применяется модель \verb|GARCH(1,1)| и вычисляется $R^2$ примененной к нему модели.
+      \item \verb|alpha| Параметр сглаживания для уровня в модели \verb|ets(A,A,N)|.
+      \item \verb|beta| Параметр сглаживания для тренда в модели ets(A,A,N), соответствующего ряда.
+      \item \verb|hurst|  Коэффициент Херста, указывающий уровень дробной разности временных рядов.
+      \item \verb|lumpiness|  Дисперсия дисперсий основана на делении ряда на неперекрывающиеся части. Размер части частота ряда, или 10, если ряд имеет частоту 1.
+      \item \verb|nonlinearity|  Нелинейность статистики на основе теста Terasvirta нелинейности временных рядов.
+      \item \verb|x_pacf5| Сумма квадратов первых пяти частных автокорреляций ряда
+      \item \verb|diff1x_pacf5|  Сумма квадратов первых пяти частных автокорреляций первой разности ряда.
+      \item \verb|diff2x_pacf5|  Сумма квадратов первых пяти частных автокорреляций второй разности ряда.
+      \item \verb|seas_pacf| Частная автокорреляция первого сезонного лага. Если сезонности нет, равен 0.
+      \item \verb|nperiods|  Количество сезонных периодов ряда.
+      \item \verb|seasonal_period|  Длина сезонного периода ряда.
+      \item \verb|trend|  В STL разложении  ряда с $r_t$ оставшейся части $z_t$ с исключенной сезонностью ряда: $max[0,1 -- Var(rt)/Var(zt)]$.
+      \item \verb|spike|  В  STL разложении ряда с $r_t$ остаток серии, дисперсия оставить один из дисперсий $r_t$
+      \item \verb|linearity|  В разложении STL ряда с $T_t$ трендовой составляющей, квадратичная модель в зависимости от времени $T_t = \beta_{0} + \beta_{1}t + \beta_{2}t^2 + \epsilon_t$ linearity $\beta_1$
+      \item \verb|curvature|  В разложении STL ряда с $T_t$ трендовой составляющей, квадратичная модель в зависимости от времени $T_t = \beta_{0} + \beta_{1}t + \beta_{2}t^2 + \epsilon_t$ curvature $\beta_2$
+      \item \verb|e_acf1|  Первый коэффициент автокорреляции остатков ряда в STL разложении.
+      \item \verb|e_acf10|  Сумма первых 10 квадратов коэффициентов автокорреляции остатков ряда в STL разложении.
+      \item \verb|seasonal_strength|  В разложении STL ряда, где rt - остатки ряда, xt - ряд, очищенный от тренда: $max[0,1 -- Var(rt)/Var(zt)]$.
+      \item \verb|peak|  Расположение пика (максимального значения) в сезонной составляющей и разложение STL ряда.
+      \item \verb|trough|  Расположение минимального значения в сезонной составляющей и разложение STL ряда.
+      \item \verb|stability|  Дисперсия средних основана на делении ряда на неперекрывающиеся части. Длина части -  частота ряда, или 10, если ряд имеет частоту 1.
+      \item \verb|hw_alpha|  $\alpha$ параметр модели \verb|ets(A,A,A)|, примененной к ряду.
+      \item \verb|hw_beta| $\beta$ параметр модели \verb|ets(A,A,A)|, примененной к ряду.
+      \item \verb|hw_gamma| $\gamma$ параметр модели \verb|ets(A,A,A)|, примененной к ряду.
+      \item \verb|unitroot_kpss| Статистика по Kwiatkowski et al. тест единичного корня с линейным трендом и лагом 1.
+      \item \verb|unitroot_pp| статистика для  Z-alpha версии теста единичного корня Phillips\&Perron с постоянным трендом и лагом 1.
+      \item  \verb|series_length| Длина ряда.
+    \end{enumerate}
+
+\subsection{Обучение модели}
+
+  Чтобы обучить модель самостоятельно, вам понадобится набор данных и список методов прогнозирования, которые вы хотите использовать.
+  Самостоятельно выбираете количество последних элементов ряда, для которых будут строиться прогнозы во время обучения.
+  Чтобы поделить выборку на train и test, достаточно выбрать h и применить функцию \verb|temp_holdout()|.
+
+  Далее происходит подсчет прогнозов \verb|calc_forecasts()| каждого метода из списка \verb|forec_methods()| (по умолчанию туда включены все методы, описанные ранее в работе, но можно самостоятельно внести изменения в перечень) и их ошибок \verb|calc_errors()|.
+  Параллельно с помощью функции \verb|THA_features()| из ряда извлекаются признаки, описанные выше (42 признака).
+  Функция \verb|create_feat_classif_problem()| упорядочивает методы прогнозирования для каждого ряда в порядке убывания ошибки прогноза, расставляя метки.
+
+  Далее модель непосредственно обучается.
+  Мы используем специальный пакет customxgboost, потому что R версия пакета xgboost не позволяет вводить пользовательские функции потерь для многоклассовых задач.
+
+
+\section{Тестирование на наборах данных}
+
+  \subsection{M4}
+
+  Из набора данных М4 были выбраны по 50 рядов разной частоты: квартальные, месячные и годовые.
+  В М4 данные уже поделены на тренировочную и тестовую выборки, которые обозначаются \textbf{x} и \textbf{xx} соответственно.
+  Каждый ряд был спрогнозирован тремя методами: ETS, ARIMA и META (в данном случае так обозначен исследуемый метод, комбинирующий алгоритмы). Ошибки MAPE каждого алгоритма усреднялись.
+
+  % latex table generated in R 3.5.3 by xtable 1.8-4 package
+  % Tue May 21 13:07:20 2019
+  \begin{table}[ht]
+  \centering
+  \begin{tabular}{rllll}
+    \hline
+   & Периодичность & ETS & ARIMA & META \\
+    \hline
+    1 & Месячные ряды & 7.42 & 7.73 & 7.02 \\
+    2 & Квартальные ряды & 2.72 & 2.72 & 2.67 \\
+    3 & Годовые ряды & 21.61 & 20.73 & 16.16 \\
+     \hline
+  \end{tabular}
+  \caption{MAPE прогнозов с помощью 3 основных методов}
+  \end{table}
+
+
+  Из таблицы видно, что META стал лучшим во всех категориях, ETS опередил ARIMA на месячных рядах, а ARIMA показала хороший результат на годовых.
+  Интересно, что диапазон значения ошибок не прямопропорционален их частоте.
+
+  Возможно, свою роль в победе алгоритма META сыграл тот факт, что представленная создателями модель обучалась на данных, содержащих прогнозируемые ряды.
+  Однако это не отрицает тот факт, что модель, действительно, неплохая и может давать прогнозы, по качеству превосходящие наиболее популярные методы прогнозирования.
+
+  Попробуем протестировать алгоритм на временных рядах показателей российской экономики.
+
+
+
+
+\subsection{Sophisthse}
+% latex table generated in R 3.5.3 by xtable 1.8-4 package
+% Sun May 26 10:22:36 2019
+
+Протестируем модель на не знакомых ей ранее рядах.
+Возьмем ряды макроэкономических показателей России из базы данных Sophisthse и модель, предобученную на рядах из М4 .
+Для загрузки данных существует специальный пакет, инструкцию по установке которго можно найти в приложении.
+Как и в предыдущем случае отфильтруем ряды по частоте и построим прогнозы тремя основными методами.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rllll}
+  \hline
+ & Периодичность & ETS & ARIMA & META \\
+  \hline
+1 & Месячные ряды & 14.22 & 10.85 & 4.15 \\
+  2 & Квартальные ряды & 13.97 & 11.36 & 10.19 \\
+  3 & Годовые ряды & 15.91 & 12.70 & 11.86\\
+   \hline
+\end{tabular}
+\caption{MAPE прогнозов sophisthse с помощью 3 основных методов}
+\end{table}
+
+Из таблицы видно, что МЕТА-прогноз показал относительно лучшее качество во всех категориях.
+
+
+% latex table generated in R 3.5.3 by xtable 1.8-4 package
+% Fri Jun 14 15:44:28 2019
+\begin{table}[ht]
+\centering
+\begin{tabular}{rllll}
+  \hline
+ & Периодичность & ETS & ARIMA & META \\
+  \hline
+1 & Месячные ряды & 24.8 & 14.95 & 5.36 \\
+  2 & Квартальные ряды & 22.13 & 19.84 & 23.87\\
+  3 & Годовые ряды & 45.61 & 23.16 & 22.43 \\
+   \hline
+\end{tabular}
+\caption{Стандартное отклонение MAPE прогнозов sophisthse с помощью 3 основных методов}
+\end{table}
+
+Сравним качество прогнозов для двух разных датасетов.
+Особенно хорошее качество мета-модель показала на месячных рядах Sophisthse, где так же можно заметить, что, чем больше частота ряда, тем хуже качество пронозов по MAPE.
+
+\begin{minted}{r}
+accuracy_summ %>%
+ggplot(aes(x = period, y = MAPE, label = method, colour = method)) +
+facet_wrap(~dataset) +
+geom_text() +
+scale_colour_brewer(palette = "Set1") +
+theme(legend.position = "none") +
+labs(x = "", y = "Среднее MAPE", colour = "") +
+ggtitle("Сравнение методов ETS, ARIMA и META",
+        subtitle = "Наборы данных 'M4' и 'Sophisthse'")
+\end{minted}
+
+\begin{figure}[H]
+  \noindent\centering{
+  \includegraphics[width=\linewidth]{compar.png}
+  }
+  \caption{Сравнение качества прогнозирования}
+  %\label{figCurves}
+\end{figure}
+
+
+\section{Обучение модели}
+
+До этого момента мы использовали для прогнозирования предобученную модель M4metaresults, теперь попробуем самостоятельно обучить модель на рядах из Sophisthse. Возьмем только половину месячных рядов, поскольку процессобучения занимает достаточно много времени.
+
+\begin{minted}{r}
+# возьмем предварительно подготовленный список рядов data_soph
+meta_M4 <- temp_holdout(data_soph)
+
+# Осторожно: это займет много времени
+meta_M4 <- calc_forecasts(meta_M4, forec_methods(), n.cores=2)
+
+# Вычисляем ошибки
+meta_M4 <- calc_errors(meta_M4)
+
+# Извлекаем признаки
+meta_M4 <- THA_features(meta_M4, n.cores=2)
+
+# Подбираем гиперпараметры
+hyperparameter_search(meta_M4, filename = "M4_hyper.RData", n_iter=50)
+
+# Выбираем лучшие найденные параметры
+load("M4_hyper.RData")
+best_hyper <- bay_results[ which.min(bay_results$combi_OWA), ]
+
+# Обучаем модель на подобранных параметрах
+
+train_data <- create_feat_classif_problem(meta_M4)
+param <- list(max_depth=best_hyper$max_depth,
+              eta=best_hyper$eta,
+              nthread = 3,
+              silent=1,
+              objective=error_softmax_obj,
+              num_class=ncol(train_data$errors),
+              subsample=bay_results$subsample,
+              colsample_bytree=bay_results$colsample_bytree)
+
+meta_model <- train_selection_ensemble(train_data$data,
+                                       train_data$errors,
+                                       param=param)
+
+\end{minted}
+
+Обученная на части данных из Sophisthse модель meta\_model готова, попробуем с помощью нее спрогнозировать те же годовые, квартальные и месячные ряды из Sophisthse.
+Сравним результаты с предобученной моделью.
+
+\begin{figure}[H]
+  \noindent\centering{
+  \includegraphics[width=\linewidth]{metalearn.png}
+  }
+  \caption{Сравнение качества прогнозирования}
+  %\label{figCurves}
+\end{figure}
+
+В целом, качество мета алгоритма стало немного хуже по сравнению с моделью авторов, но, учитывая тот факт, что предобученная модель обучалась на 100000 рядах, а наша использовала меньше 100, то результат достаточно впечатляющий, поскольку на месячных и годовых рядах мета по-прежнему обыгрывает ARIMA и ETS.
+
+Здесь можно увидеть наиболее важные признаки рядов, по мнению нашей модели.
+\begin{minted}{r}
+mat <- xgboost::xgb.importance (feature_names = colnames(train_data$data),
+                              model = meta_model)
+xgboost::xgb.plot.importance(importance_matrix = mat[1:20], cex=1.0)
+
+\end{minted}
+
+\begin{figure}[H]
+  \noindent\centering{
+  \includegraphics[width=\linewidth]{features.png}
+  }
+  \caption{Важность признаков}
+  %\label{figCurves}
+\end{figure}
+
+
+\section{Итоги}
+
+Таким образом, разобравшись как работает модель и протестировав ее на разных наборах данных, можно сделать вывод, что новый метод прогнозирования Meta справляется лучше, чем автонастраиваемые Arima и ETS модели. Он требует больше времени на вычисление, но строит хорошие прогнозы.
+
+Если есть возможность, рекомендуется обучать собственную модель применительно к данным, которые собираетесь прогнозировать. Так, если данных будет достаточно, можно добиться достаточно хорошего качества. Если возникают какие-то тружности, то предобученная модель тоже неплохая и неприхотлива в установке.
+
+
+\section{Установка}
+Фрагменты кода и описание проблем, которые могут возникнуть, смотрите здесь.
+
+Все манипуляции будем производить в RStudio.
+Для реализации кода необходимо установить и подключить следующие пакеты:
+
+\begin{minted}{r}
+# Для новичков: если что-то не подключается, проверьте в Tools ~
+# Install Packages... загружена ли библиотека
+
+Подключим библиотеки:
+library(devtools)         # для загрузки пакетов
+library(dplyr)            # инструменты для работы с массивами данных
+library(forecast)         # базовые методы прогнозирования
+library(ggplot2)          # визуализация
+library(fpp2)             # временные ряды
+library(xtable)           # для импорта таблиц
+library(tseries)          # для анализа рядов
+
+\end{minted}
+
+Теперь загрузим пакеты, подготовленные авторами исследуемого алгортима.
+Если вам для прогнозирования достаточно предобученной авторами модели, установите следующее:
+
+\begin{minted}{r}
+
+devtools::install_github("pmontman/tsfeatures")
+devtools::install_github("robjhyndman/M4metalearning")
+
+# Обратите внимание, что пакет весит около 1Гб
+install.packages("https://github.com/pmontman/M4metaresults/releases/download/
+v0.0.0.9000/M4metaresults_0.0.0.9000.tar.gz", repos = NULL, type="source")
+
+Подключим библиотеки:
+library(M4metalearning)   # исследуемый алгоритм
+library(M4metaresults)    # предобученная модель
+\end{minted}
+
+Если у вас имеется достаточно большое количество данных и вы хотите обучить на них исследуемую модель, необходимо установить специальную версию пакета xgboost (eXtreme Gradient Boosting Training), которая не встроена в RStudio.
+
+\begin{minted}{r}
+devtools::install_github("pmontman/customxgboost")
+\end{minted}
+
+Если у вас Macbook и возникла ошибка, как на картинке ниже, нужно будет сделать еще несколько манипуляций.
+
+\begin{figure}[H]
+  \noindent\centering{
+  \includegraphics[width=\linewidth]{xgboost.jpg}
+  }
+  \caption{Распространенная ошибка}
+  %\label{figCurves}
+\end{figure}
+
+Посмотрите в консоли RStudio какая у вас версия R и следуйте указаниям с
+\href{http://www.thecoatlessprofessor.com/programming/r-compiler-tools-for-rcpp-on-macos-before-r-3.6.0/}{сайта}
+или воспользуйтесь \href{https://github.com/pmontman/customxgboost/issues/1}{советами} пользователей, решивших данную проблему.
+Если хотите найти решение проблемы самостоятельно, обязательно учитывайте вашу версию RStudio.
+
+Если вам удалось решить проблему с customxgboost, далее все должно работать нормально.
+
+Также может возникнуть ошибка при скачивании данных M4comp2018.
+Пока неизвестно с чем это связано, следите за \href{https://github.com/carlanetto/M4comp2018/issues/1}{новостями}.
+
+\begin{minted}{r}
+devtools::install_github("carlanetto/M4comp2018")
+\end{minted}
+
+Если у вас при использовании метода META возникает похожая ошибка (см.ниже), проверьте соотношение выборок train и test для ваших рядов. Удалите слишком короткие или увеличьте размер h. Все ряды нужно очищать от пропусков, например, с помощью na.remove или na.omit.
+
+ \begin{minted}{r}
+ Error in if (length(seriesentry$x) - seriesentry$h < max(2 * frq + 1,  :
+argument is of length zero
+ \end{minted}
+
+Если неожиданно появляются проблемы с подключением к Sophisthse, которых раньше не было, проверьте подключение к интернету.
+
+\newpage
+
+\section{Литература}
+\begin{enumerate}
+  \item Rob J Hyndman and George Athanasopoulos, Forecasting: Principles and Practice.
+  \item Pablo Montero-Manso, Forecasting Metalearning Example
+  \item Pablo Montero-Manso, Reproducibility: Combination of Forecast Methods by Feature-based Learning.
+  \item Makridakis, Spyros and Spiliotis, Evangelos and Assimakopoulos, Vassilis, The M4 Competition: Results, findings, conclusion and way forward, International Journal of Forecasting.
+  \item Rob J Hyndman, Baki Billah, Unmasking the Theta method.
+
+\end{enumerate}
+
+
+\end{document}
